@@ -12,4 +12,14 @@ server <- function(input, output) {
       geom_histogram(color = "white")+
       theme_minimal()
   )
+  
+  output$no_obs <- renderValueBox(
+    valueBox(data() %>% n_distinct(),subtitle = "no.observations")
+    
+  )
+  
+  output$median_m2 <- renderValueBox(
+    valueBox(data() %>% median(m2,na.rm = T),subtitle = "Mean")
+    
+  )
 }
