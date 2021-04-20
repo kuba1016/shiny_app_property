@@ -1,0 +1,5 @@
+```{r}
+det <- "mazowieckie"
+if_else(det == "mazowieckie", new_homes %>% filter(voivodeship == det),new_homes)
+```
+

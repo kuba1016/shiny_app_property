@@ -1,5 +1,10 @@
 
 server <- function(input, output) {
-  
-  output$homes <- renderDataTable(new_homes,options = list(pageLength = 10))
+  data <- reactive(if ("All" %in% input$voiv) {
+    new_homes 
+  } else {
+    new_homes %>% filter(voivodeship == input$voiv)
+  })
+
+  output$homes <- renderDataTable(data(), options = list(pageLength = 10))
 }
