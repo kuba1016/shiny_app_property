@@ -1,23 +1,22 @@
 
 ui <- fluidPage(
-
-  # Application title
-  titlePanel("Old Faithful Geyser Data"),
-
-  # Sidebar with a slider input for number of bins
-  sidebarLayout(
-    sidebarPanel(
-      sliderInput("bins",
-        "Number of bins:",
-        min = 1,
-        max = 50,
-        value = 30
+  tabsetPanel(
+    tabPanel(
+      "Main",
+      fluidRow(
+        column(6, sliderInput("obs", "Number of observations:", min = 10, max = 500, value = 100)),
+        column(6, selectInput("voiv", "Voivodeship", choices = unique(new_homes$voivodeship))),
+        fluidRow(column(12, dataTableOutput("homes")))
       )
     ),
-
-    # Show a plot of the generated distribution
-    mainPanel(
-      plotOutput("distPlot")
+    tabPanel(
+      "Map",
+      sliderInput("obs", "Number of observations:", min = 10, max = 500, value = 100)
+    ),
+    tabPanel(
+      "About",
+      sliderInput("obs", "Number of observations:", min = 10, max = 500, value = 100)
     )
   )
 )
+
