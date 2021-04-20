@@ -1,14 +1,20 @@
 
 ui <- fluidPage(
+  theme = bs_theme(bootswatch = "minty"),
+  titlePanel("poland property"),
   tabsetPanel(
     tabPanel(
       "Main",
       fluidRow(
         column(3, selectInput("voiv", "Voivodeship", choices = c("All", unique(new_homes$voivodeship)))),
-        column(6, plotOutput("m2_plot")),
-        column(3, valueBoxOutput("no_obs"))
+        column(9, plotOutput("m2_plot"))
       ),
-      fluidRow(column(3, sliderInput("rooms", "Number of rooms:", min = 0, max = max(new_homes$rooms, na.rm = T), value = 4))),
+      fluidRow(
+        column(3, valueBoxOutput("no_obs")),
+        column(3, valueBoxOutput("median_m2")),
+        column(3, valueBoxOutput("max_m2")),
+        column(3, valueBoxOutput("min_m2"))
+      ),
       fluidRow(column(12, dataTableOutput("homes")))
     ),
     tabPanel(

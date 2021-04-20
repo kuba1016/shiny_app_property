@@ -5,7 +5,6 @@ server <- function(input, output) {
   } else {
     new_homes %>% filter(voivodeship == input$voiv)
   })
-
   output$homes <- renderDataTable(data(), options = list(pageLength = 10))
   output$m2_plot <- renderPlot(
     ggplot(data(),aes(m2))+
@@ -19,7 +18,13 @@ server <- function(input, output) {
   )
   
   output$median_m2 <- renderValueBox(
-    valueBox(data() %>% median(m2,na.rm = T),subtitle = "Mean")
+    valueBox(median(data()$m2,na.rm = TRUE),subtitle = "Median (m2)")
     
+  )
+  output$max_m2 <- renderValueBox(
+    valueBox( max(data()$m2,na.rm = TRUE),subtitle = "Max (m2)")
+    )
+  output$min_m2 <- renderValueBox(
+    valueBox( min(data()$m2,na.rm = TRUE),subtitle = "Max (m2)")
   )
 }

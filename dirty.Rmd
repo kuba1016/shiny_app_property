@@ -8,4 +8,11 @@ ggplot(new_homes,aes(m2))+
   geom_histogram(color = "white")
 
 ```
+```{r}
+new_homes %>% median(as.double(m2),na.rm = T)
+```
+
+```{r}
+median(new_homes$m2,na.rm = T)
+```
 
