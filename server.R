@@ -8,7 +8,8 @@ server <- function(input, output) {
   output$homes <- renderDataTable(data(), options = list(pageLength = 10))
   output$m2_plot <- renderPlot(
     ggplot(data(),aes(m2))+
-      geom_histogram(color = "white")+
+      geom_histogram(color = "white",fill = "#78C2AD")+
+      geom_vline(aes(xintercept = mean(data()$m2,na.rm = T)))+
       theme_minimal()
   )
   

@@ -1,10 +1,10 @@
 
-ui <- fluidPage(
+ui <- navbarPage(h4("Polish Property App."),
   theme = bs_theme(bootswatch = "minty"),
-  titlePanel("poland property"),
-  tabsetPanel(
+  
+  
     tabPanel(
-      "Main",
+      h5("Main"),
       fluidRow(
         column(3, selectInput("voiv", "Voivodeship", choices = c("All", unique(new_homes$voivodeship)))),
         column(9, plotOutput("m2_plot"))
@@ -18,12 +18,12 @@ ui <- fluidPage(
       fluidRow(column(12, dataTableOutput("homes")))
     ),
     tabPanel(
-      "Map",
+      h5("Map"),
       sliderInput("obs", "Number of observations:", min = 10, max = 500, value = 100)
     ),
     tabPanel(
-      "About",
+      h5("About"),
       sliderInput("obs", "Number of observations:", min = 10, max = 500, value = 100)
     )
-  )
+  
 )

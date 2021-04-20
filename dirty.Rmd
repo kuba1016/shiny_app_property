@@ -5,7 +5,8 @@ if_else(det == "mazowieckie", new_homes %>% filter(voivodeship == det),new_homes
 
 ```{r}
 ggplot(new_homes,aes(m2))+
-  geom_histogram(color = "white")
+  geom_histogram(color = "white", fill = "#78C2AD")+
+  geom_vline(xintercept = median(new_homes$m2) )
 
 ```
 ```{r}
