@@ -22,11 +22,23 @@ server <- function(input, output) {
 
   # rendering dataTable.
   output$homes <- renderDataTable(data(), options = list(pageLength = 5))
-  # rendering histogram
+  # rendering histogram m2
   output$m2_plot <- renderPlot(
     ggplot(data(), aes(m2)) +
       geom_histogram(color = "white", fill = "#78C2AD") +
       geom_vline(aes(xintercept = mean(data()$m2, na.rm = T))) +
+      theme_minimal(),
+    res = 96
+  )
+
+  # rendering histogram prices
+  output$price_plot <- renderPlot(
+    ggplot(data(), aes(price)) +
+      geom_histogram(color = "white", fill = "#78C2AD", bins = 50) +
+      scale_x_continuous(labels = function(n) {
+        format(n, scientific = FALSE)
+      }) +
+      geom_vline(aes(xintercept = median(data()$price, na.rm = T))) +
       theme_minimal(),
     res = 96
   )

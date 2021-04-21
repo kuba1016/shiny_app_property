@@ -10,7 +10,8 @@ ui <- navbarPage(h4("Polish Property App."),
       column(3, valueBoxOutput("min_price"))
     ),
     fluidRow(
-      column(12, plotOutput("m2_plot"))
+      column(6, plotOutput("m2_plot")),
+      column(6, plotOutput("price_plot"))
     ),
     fluidRow(
       column(3, valueBoxOutput("no_obs")),

@@ -14,6 +14,10 @@ new_homes %>% median(as.double(m2),na.rm = T)
 ```
 
 ```{r}
-median(new_homes$m2,na.rm = T)
+ggplot(new_homes,aes(price))+
+  geom_histogram(color = "white", fill = "#78C2AD")+
+  geom_vline(xintercept = median(new_homes$price) ) +
+  scale_x_continuous(labels=function(n){format(n, scientific = FALSE)})+
+  theme_minimal()
 ```
 
