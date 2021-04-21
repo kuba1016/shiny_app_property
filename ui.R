@@ -4,8 +4,11 @@ ui <- navbarPage(h4("Polish Property App."),
   tabPanel(
     h5("Main"),
     fluidRow(
-      column(3, selectInput("voiv",h6("Voivodeship"), choices = c("All", unique(new_homes$voivodeship)))),
-      column(9, plotOutput("m2_plot"))
+      column(12, plotOutput("m2_plot"))
+    ),
+    fluidRow(
+      column(3, selectInput("market", h6("Market"), choices = c("New build", "Open market"), selected = "New build")),
+      column(3, selectInput("voiv", h6("Voivodeship"), choices = c("All", unique(new_homes$voivodeship)), selected = "All"))
     ),
     fluidRow(
       column(3, valueBoxOutput("no_obs")),
