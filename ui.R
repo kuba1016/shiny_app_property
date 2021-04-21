@@ -7,7 +7,7 @@ ui <- navbarPage(h4("Polish Property App."),
       column(12, plotOutput("m2_plot"))
     ),
     fluidRow(
-      column(3, selectInput("market", h6("Market"), choices = c("New build", "Open market"), selected = "New build")),
+      column(3, selectInput("market", h6("Market"), choices = c("All", "New build", "Open market"), selected = "All")),
       column(3, selectInput("voiv", h6("Voivodeship"), choices = c("All", unique(new_homes$voivodeship)), selected = "All"))
     ),
     fluidRow(

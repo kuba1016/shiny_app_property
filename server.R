@@ -3,7 +3,8 @@ server <- function(input, output) {
   homes_df <- reactive(
     switch(input$market,
       "New build" = new_homes,
-      "Open market" = old_homes
+      "Open market" = old_homes,
+      "All" = rbind(new_homes, old_homes)
     )
   )
 
