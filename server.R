@@ -30,7 +30,7 @@ server <- function(input, output) {
       theme_minimal(),
     res = 96
   )
-  # value boxes : min, max, median, number of observations.
+  # value boxes for m2 : min, max, median, number of observations.
   output$no_obs <- renderValueBox(
     valueBox(data() %>% n_distinct(), subtitle = "no.observations")
   )
@@ -43,5 +43,18 @@ server <- function(input, output) {
   )
   output$min_m2 <- renderValueBox(
     valueBox(min(data()$m2, na.rm = TRUE), subtitle = "Min (m2)")
+  )
+
+  # value boxes for prices
+
+
+  output$median_price <- renderValueBox(
+    valueBox(median(data()$price, na.rm = TRUE) %>% format(scientific = F), subtitle = "Median (PLN)", width = 3)
+  )
+  output$max_price <- renderValueBox(
+    valueBox(max(data()$price, na.rm = TRUE) %>% format(scientific = F), subtitle = "Max (PLN)")
+  )
+  output$min_price <- renderValueBox(
+    valueBox(min(data()$price, na.rm = TRUE) %>% format(scientific = F), subtitle = "Min (PLN)")
   )
 }

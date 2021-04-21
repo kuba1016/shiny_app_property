@@ -4,6 +4,12 @@ ui <- navbarPage(h4("Polish Property App."),
   tabPanel(
     h5("Main"),
     fluidRow(
+      column(3, "Place holder"),
+      column(3, valueBoxOutput("median_price")),
+      column(3, valueBoxOutput("max_price")),
+      column(3, valueBoxOutput("min_price"))
+    ),
+    fluidRow(
       column(12, plotOutput("m2_plot"))
     ),
     fluidRow(
