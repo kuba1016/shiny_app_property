@@ -69,4 +69,19 @@ server <- function(input, output) {
   output$min_price <- renderValueBox(
     valueBox(min(data()$price, na.rm = TRUE) %>% format(scientific = F), subtitle = "Min (PLN)")
   )
+
+  # value boxes for prices
+
+  output$img <- renderImage(
+    {
+      # outfile <- tempfile(fileext = ".png")
+      list(
+        src = file.path(paste0("www/img/", input$voiv, ".svg")),
+        alt = "This is sign of voivodship",
+        width = 100,
+        height = 100
+      )
+    },
+    deleteFile = F
+  )
 }

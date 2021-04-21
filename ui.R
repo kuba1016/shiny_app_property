@@ -4,7 +4,7 @@ ui <- navbarPage(h4("Polish Property App."),
   tabPanel(
     h5("Main"),
     fluidRow(
-      column(3, "Place holder"),
+      column(3, box(imageOutput("img", height = 100, width = 100, inline = T))),
       column(3, valueBoxOutput("median_price")),
       column(3, valueBoxOutput("max_price")),
       column(3, valueBoxOutput("min_price"))
