@@ -49,8 +49,85 @@ paste0("^",var,".","(*)","$")
 list.files("./www/img")
 ```
 ```{r}
-new_homes$voivodeship
+mi_counties <- map_data("county", "michigan") %>% 
+  select(lon = long, lat, group, id = subregion)
+head(mi_counties)
+#>     lon  lat group     id
+#> 1 -83.9 44.9     1 alcona
+#> 2 -83.4 44.9     1 alcona
+#> 3 -83.4 44.9     1 alcona
+#> 4 -83.3 44.8     1 alcona
+#> 5 -83.3 44.8     1 alcona
+#> 6 -83.3 44.8     1 alcona```
+```{r}
+
 ```
+
+```{r}
+sh <- getShape("polska")
+voiv_map <- getShape("voiv")
+```
+```{r}
+library(leaflet)
+library(mapoland)
+leaflet() %>% 
+  addTiles() %>% 
+  
+  addPolygons(data = sh,
+              color = "red",
+              weight = 1)
+```
+
+```{r}
+plot(voiv_map)
+```
+```{r}
+df_names <- new_homes$voivodeship %>% unique() 
+```
+
+
+```{r}
+sh_names <- voiv_map$names_utf8 %>% unique()
+```
+```{r}
+sh_names[1]
+```
+
+```{r}
+new_homes %>% left_join(voiv_map,by("voivodeship"="names_utf8"))
+```
+```{r}
+
+```
+
+
+```{r}
+```
+```{r}
+library(sf)
+```
+```{r}
+woj_sp <- read_sf("data/ne_10m_admin_1_states_provinces/")
+```
+```{r}
+woj_sf <- woj_sp %>% filter(iso_a2 == "PL") %>% 
+  select(name_pl,geometry) %>% 
+  mutate(name_pl = str_remove(name_pl,"województwo ")) %>% 
+  mutate(name_pl = str_remove(name_pl,"-"))
+  
+```
+```{r}
+df_map <- new_homes %>% left_join(woj_sf,by=c("voivodeship"="name_pl"))
+```
+
+
+```{r}
+ggplot(df_map)+
+  geom_sf(aes(fill=voivodeship,geometry = geometry))
+```
+
+
+
 
 
 
