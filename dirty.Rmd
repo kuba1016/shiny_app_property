@@ -123,11 +123,39 @@ df_map <- new_homes %>% left_join(woj_sf,by=c("voivodeship"="name_pl"))
 
 ```{r}
 ggplot(df_map)+
-  geom_sf(aes(fill=voivodeship,geometry = geometry))
+  geom_sf(aes(fill=voivodeship,geometry = geometry))+
+  
+  theme_void()
 ```
 
 
+```{r}
+map_df <- new_homes %>% 
+  group_by(voivodeship) %>% 
+  summarise(number_offers=sum(n()),
+            mean_price = mean(price,na.rm = T),
+            median_price = median(price,na.rm = T),
+            ) %>% 
+  left_join(woj_sf,by=c("voivodeship"="name_pl"))
+```
 
+```{r}
+ggplot(map_df)+
+  geom_sf(aes(fill=number_offers,geometry = geometry))+
+  theme_void()
+```
+```{r}
+ggplot(map_df)+
+  geom_sf(aes(fill=median_price,geometry = geometry))+
+  geom_sf_label(aes(label = paste0(voivodeship,"\n",median_price),geometry = geometry),
+                label.size = 0,
+                label.padding = unit(0.2,"mm")
+                )+
+  scale_fill_gradient(low = "#ffffcc",high = "#006837")+
+  
+  
+  theme_void()
+```
 
 
 

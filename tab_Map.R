@@ -2,7 +2,7 @@ tab_map <- function() {
   tabPanel(
     h5("Map"),
     fluidRow(
-      column(10, "map"),
+      column(10, plotOutput("map")),
       column(
         2,
         selectInput("market", h6("Market"), choices = c("All", "New build", "Open market"), selected = "All"),
