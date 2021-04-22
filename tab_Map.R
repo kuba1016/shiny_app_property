@@ -1,7 +1,14 @@
-tab_map <- function(){
+tab_map <- function() {
   tabPanel(
     h5("Map"),
-    sliderInput("obs", "Number of observations:", min = 10, max = 500, value = 100)
+    fluidRow(
+      column(10, "map"),
+      column(
+        2,
+        selectInput("market", h6("Market"), choices = c("All", "New build", "Open market"), selected = "All"),
+        selectInput("voiv", h6("Voivodeship"), choices = c("All", unique(new_homes$voivodeship)), selected = "All")
+      )
+      
+    )
   )
-  
 }
