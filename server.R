@@ -21,7 +21,7 @@ server <- function(input, output) {
 
 
   # rendering dataTable.
-  output$homes <- renderDataTable(data(), options = list(pageLength = 5))
+  output$homes <- renderDataTable(data(), options = list(pageLength = 30))
   # rendering histogram m2
   output$m2_plot <- renderPlot(
     ggplot(data(), aes(m2)) +
@@ -85,27 +85,26 @@ server <- function(input, output) {
     deleteFile = F
   )
   # map reactivity
-  
+
   variable <- reactive({
-    if("number_offers" %in% input$metric)return(map_df$number_offers)
-    if("median_price" %in% input$metric)return(map_df$median_price)
-    
-    
+    if ("number_offers" %in% input$metric) {
+      return(map_df$number_offers)
+    }
+    if ("median_price" %in% input$metric) {
+      return(map_df$median_price)
+    }
   })
-  output$map <- renderPlot({
-    ggplot(map_df)+
-      geom_sf(aes(fill=variable(),geometry = geometry),show.legend = FALSE)+
-      geom_sf_label(aes(label = paste0(voivodeship,"\n",variable()),geometry = geometry),
-                    label.size = 0,
-                    label.padding = unit(0.2,"mm")
-      )+
-      scale_fill_gradient(low = "#ffffcc",high = "#006837")+
-      
-      
-      theme_void()
-  },res = 96)
+  output$map <- renderPlot(
+    {
+      ggplot(map_df) +
+        geom_sf(aes(fill = variable(), geometry = geometry), show.legend = FALSE) +
+        geom_sf_label(aes(label = paste0(voivodeship, "\n", variable()), geometry = geometry),
+          label.size = 0,
+          label.padding = unit(0.2, "mm")
+        ) +
+        scale_fill_gradient(low = "#ffffcc", high = "#006837") +
+        theme_void()
+    },
+    res = 96
+  )
 }
-
-
-
-
