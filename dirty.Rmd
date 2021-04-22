@@ -135,12 +135,15 @@ map_df <- new_homes %>%
   summarise(number_offers=sum(n()),
             mean_price = mean(price,na.rm = T),
             median_price = median(price,na.rm = T),
-            ) %>% 
-  left_join(woj_sf,by=c("voivodeship"="name_pl"))
+            ) %>%
+  ungroup() %>% 
+  left_join(woj_sf,by=c("voivodeship"="name_pl")) %>% 
+  write_csv("map_df.csv")
 ```
 
 ```{r}
-ggplot(map_df)+
+m <- vroom("map_df.csv")
+ggplot(m)+
   geom_sf(aes(fill=number_offers,geometry = geometry))+
   theme_void()
 ```
