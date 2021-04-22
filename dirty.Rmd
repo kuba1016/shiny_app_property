@@ -21,3 +21,38 @@ ggplot(new_homes,aes(price))+
   theme_minimal()
 ```
 
+```{r}
+list.files("./www/img",pattern = "opolskie")
+```
+```{r}
+paste0("./www/img","/opolskie")
+```
+
+```{r}
+var = stringi::stri_trans_nfd("śląskie")
+str_length(var)
+Encoding(var)
+```
+
+```{r}
+list.files("./www/img",pattern = paste0("^",str_squish(var),"(.*)","$")
+)
+
+```
+
+^
+```{r}
+paste0("^",var,".","(*)","$")
+```
+
+```{r}
+list.files("./www/img")
+```
+```{r}
+new_homes$voivodeship
+```
+
+
+
+
+
