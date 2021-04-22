@@ -14,7 +14,6 @@ server <- function(input, output) {
   data <- reactive(
     if ("All" %in% input$voiv) {
       homes_df()
-      
     } else {
       homes_df() %>% filter(voivodeship == input$voiv)
     }
@@ -77,7 +76,7 @@ server <- function(input, output) {
     {
       # outfile <- tempfile(fileext = ".png")
       list(
-        src = file.path(list.files("./www/img",pattern =paste0("^",stringi::stri_trans_nfd(input$voiv),"(.*)","$"),full.names = T)),
+        src = file.path(list.files("./www/img", pattern = paste0("^", stringi::stri_trans_nfd(input$voiv), "(.*)", "$"), full.names = T)),
         alt = "This is sign of voivodship",
         width = 100,
         height = 100
