@@ -74,7 +74,6 @@ server <- function(input, output) {
 
   output$img <- renderImage(
     {
-      # outfile <- tempfile(fileext = ".png")
       list(
         src = file.path(list.files("./www/img", pattern = paste0("^", stringi::stri_trans_nfd(input$voiv), "(.*)", "$"), full.names = T)),
         alt = "This is sign of voivodship",
@@ -84,27 +83,42 @@ server <- function(input, output) {
     },
     deleteFile = F
   )
-  # map reactivity
-
-  variable <- reactive({
-    if ("number_offers" %in% input$metric) {
-      return(map_df$number_offers)
-    }
-    if ("median_price" %in% input$metric) {
-      return(map_df$median_price)
-    }
+  #### map reactivity ###
+  # variables for the map
+  metric <- reactive({
+    switch(input$metric,
+      "number_offers" = "number_offers",
+      "median_price" = "median_price"
+    )
   })
-  output$map <- renderPlot(
-    {
-      ggplot(map_df) +
-        geom_sf(aes(fill = variable(), geometry = geometry), show.legend = FALSE) +
-        geom_sf_label(aes(label = paste0(voivodeship, "\n", variable()), geometry = geometry),
-          label.size = 0,
-          label.padding = unit(0.2, "mm")
-        ) +
-        scale_fill_gradient(low = "#ffffcc", high = "#006837") +
-        theme_void()
-    },
-    res = 96
+  # data for the map plot
+  map_df <- reactive(
+    switch(input$market_map,
+      "New build" = map_df_new,
+      "Open market" = map_df_old,
+      "All" = rbind(map_df_new, map_df_old)
+    )
   )
+
+
+  # Rendering a map plot.
+  output$maps <- renderPlot({
+    ggplot(map_df()) +
+      geom_sf(
+        data = map_df(),
+        aes(
+          fill = median_price,
+          geometry = geometry
+        ),
+        show.legend = FALSE
+      ) +
+      geom_sf_label(
+        data = map_df(),
+        aes(label = paste0(voivodeship, "\n", median_price), geometry = geometry),
+        label.size = 0,
+        label.padding = unit(0.2, "mm")
+      ) +
+      scale_fill_gradient(low = "#ffffcc", high = "#006837") +
+      theme_void()
+  })
 }

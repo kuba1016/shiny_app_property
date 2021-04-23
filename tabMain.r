@@ -1,5 +1,6 @@
 
 tab_main <- function() {
+  
   tabPanel(
     h5("Main"),
     fluidRow(
@@ -23,4 +24,5 @@ tab_main <- function() {
       column(3, selectInput("voiv", h6("Voivodeship"), choices = c("All", unique(new_homes$voivodeship)), selected = "All"))
     )
   )
+  
 }

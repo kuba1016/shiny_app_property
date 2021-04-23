@@ -137,18 +137,17 @@ map_df <- new_homes %>%
             median_price = median(price,na.rm = T),
             ) %>%
   ungroup() %>% 
-  left_join(woj_sf,by=c("voivodeship"="name_pl")) %>% 
-  write_csv("map_df.csv")
+  left_join(woj_sf,by=c("voivodeship"="name_pl")) 
 ```
 
 ```{r}
-m <- vroom("map_df.csv")
-ggplot(m)+
+#m <- vroom("map_df.csv")
+ggplot(map_df)+
   geom_sf(aes(fill=number_offers,geometry = geometry))+
   theme_void()
 ```
 ```{r}
-ggplot(map_df)+
+ggplot(map_df_old)+
   geom_sf(aes(fill=median_price,geometry = geometry))+
   geom_sf_label(aes(label = paste0(voivodeship,"\n",median_price),geometry = geometry),
                 label.size = 0,
@@ -160,6 +159,17 @@ ggplot(map_df)+
   theme_void()
 ```
 
+```{r}
+ ggplot(map_df_new) +
+        
+        geom_sf( aes(fill = number_offers,geometry=geometry), show.legend = FALSE) +
+        #geom_sf_label(aes(label = paste0(voivodeship, "\n", variable())),
+          #label.size = 0,
+        #  label.padding = unit(0.2, "mm")
+       # ) +
+        scale_fill_gradient(low = "#ffffcc", high = "#006837") +
+        theme_void()
+```
 
 
 

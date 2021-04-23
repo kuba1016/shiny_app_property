@@ -26,7 +26,8 @@ woj_sf <- woj_sp %>%
   mutate(name_pl = str_remove(name_pl, "województwo ")) %>%
   mutate(name_pl = str_remove(name_pl, "-"))
 # map data
-map_df <- new_homes %>%
+
+map_df_new <- new_homes %>%
   group_by(voivodeship) %>%
   summarise(
     number_offers = sum(n()),
@@ -35,3 +36,16 @@ map_df <- new_homes %>%
   ) %>%
   ungroup() %>%
   left_join(woj_sf, by = c("voivodeship" = "name_pl"))
+
+map_df_old <- old_homes %>%
+  group_by(voivodeship) %>%
+  summarise(
+    number_offers = sum(n()),
+    mean_price = mean(price, na.rm = T),
+    median_price = median(price, na.rm = T),
+  ) %>%
+  ungroup() %>%
+  left_join(woj_sf, by = c("voivodeship" = "name_pl"))
+
+# map_df_all <-
+#   rbind(map_df_old, map_df_new)
