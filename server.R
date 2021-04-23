@@ -88,7 +88,9 @@ server <- function(input, output) {
   metric <- reactive({
     switch(input$metric,
       "number_offers" = "number_offers",
-      "median_price" = "median_price"
+      "median_price" = "median_price",
+      "median_m2" = "median_m2",
+      "median_plot_m2" = "median_plot_m2"
     )
   })
   # data for the map plot
@@ -96,29 +98,29 @@ server <- function(input, output) {
     switch(input$market_map,
       "New build" = map_df_new,
       "Open market" = map_df_old,
-      "All" = rbind(map_df_new, map_df_old)
+      "All" = map_df_all
     )
   )
 
 
   # Rendering a map plot.
-  output$maps <- renderPlot({
-    ggplot(map_df()) +
-      geom_sf(
-        data = map_df(),
-        aes(
-          fill = median_price,
-          geometry = geometry
-        ),
-        show.legend = FALSE
-      ) +
-      geom_sf_label(
-        data = map_df(),
-        aes(label = paste0(voivodeship, "\n", median_price), geometry = geometry),
-        label.size = 0,
-        label.padding = unit(0.2, "mm")
-      ) +
-      scale_fill_gradient(low = "#ffffcc", high = "#006837") +
-      theme_void()
-  })
+  output$maps <- renderPlot(
+    {
+      ggplot(map_df()) +
+        geom_sf(
+          data = map_df(),
+          aes(fill = .data[[metric()]], geometry = geometry),
+          show.legend = FALSE
+        ) +
+        geom_sf_label(
+          data = map_df(),
+          aes(label = paste0(voivodeship, "\n", .data[[metric()]]), geometry = geometry),
+          label.size = 0,
+          label.padding = unit(0.2, "mm")
+        ) +
+        scale_fill_gradient(low = "#ffffcc", high = "#006837") +
+        theme_void()
+    },
+    res = 96
+  )
 }

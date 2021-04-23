@@ -33,6 +33,8 @@ map_df_new <- new_homes %>%
     number_offers = sum(n()),
     mean_price = mean(price, na.rm = T),
     median_price = median(price, na.rm = T),
+    median_m2 = median(m2, na.rm = T),
+    median_plot_m2 = median(plot_m2, na.rm = T)
   ) %>%
   ungroup() %>%
   left_join(woj_sf, by = c("voivodeship" = "name_pl"))
@@ -43,9 +45,21 @@ map_df_old <- old_homes %>%
     number_offers = sum(n()),
     mean_price = mean(price, na.rm = T),
     median_price = median(price, na.rm = T),
+    median_m2 = median(m2, na.rm = T),
+    median_plot_m2 = median(plot_m2, na.rm = T)
   ) %>%
   ungroup() %>%
   left_join(woj_sf, by = c("voivodeship" = "name_pl"))
 
-# map_df_all <-
-#   rbind(map_df_old, map_df_new)
+map_df_all <-
+  rbind(new_homes, old_homes) %>%
+  group_by(voivodeship) %>%
+  summarise(
+    number_offers = sum(n()),
+    mean_price = mean(price, na.rm = T),
+    median_price = median(price, na.rm = T),
+    median_m2 = median(m2, na.rm = T),
+    median_plot_m2 = median(plot_m2, na.rm = T)
+  ) %>%
+  ungroup() %>%
+  left_join(woj_sf, by = c("voivodeship" = "name_pl"))
