@@ -61,13 +61,13 @@ server <- function(input, output) {
 
 
   output$median_price <- renderValueBox(
-    valueBox(median(data()$price, na.rm = TRUE) %>% format(scientific = F), subtitle = "Median (PLN)", width = 3)
+    valueBox( median(data()$price, na.rm = TRUE) %>% format(scientific = F,big.mark = "," ), subtitle = "Price median (PLN)", width = 3)
   )
   output$max_price <- renderValueBox(
-    valueBox(max(data()$price, na.rm = TRUE) %>% format(scientific = F), subtitle = "Max (PLN)")
+    valueBox(max(data()$price, na.rm = TRUE) %>% format(scientific = F,big.mark = ","), subtitle = "Max Price (PLN)",)
   )
   output$min_price <- renderValueBox(
-    valueBox(min(data()$price, na.rm = TRUE) %>% format(scientific = F), subtitle = "Min (PLN)")
+    valueBox(min(data()$price, na.rm = TRUE) %>% format(scientific = F,big.mark = ","), subtitle = "Min Price (PLN)")
   )
 
   # value boxes for prices
