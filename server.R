@@ -116,7 +116,8 @@ server <- function(input, output) {
           data = map_df(),
           aes(label = paste0(voivodeship, "\n", .data[[metric()]]), geometry = geometry),
           label.size = 0,
-          label.padding = unit(0.2, "mm")
+          label.padding = unit(0.2, "mm"),
+          label.r = unit(0.30, "lines")
         ) +
         scale_fill_gradient(low = "#ffffcc", high = "#006837") +
         theme_void()
